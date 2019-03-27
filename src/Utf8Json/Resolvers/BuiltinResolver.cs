@@ -88,6 +88,7 @@ namespace Utf8Json.Resolvers
             
                 // special primitive
                 {typeof(byte[]), ByteArrayFormatter.Default},
+                {typeof(RawJson), RawJsonFormatter.Default },
             
                 // otpmitized primitive array formatter
                 {typeof(Int16[]), Int16ArrayFormatter.Default},

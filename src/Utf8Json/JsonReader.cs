@@ -1128,16 +1128,22 @@ namespace Utf8Json
 
         public ulong ReadUInt64()
         {
-            SkipWhiteSpace();
-
             int readCount;
-            var v = NumberConverter.ReadUInt64(bytes, offset, out readCount);
-            if (readCount == 0)
+            if (GetCurrentJsonToken() == JsonToken.String)
             {
-                throw CreateParsingException("Number Token");
+                return ulong.Parse(ReadString());
             }
-            offset += readCount;
-            return v;
+            else
+            {
+                SkipWhiteSpace();
+                var v = NumberConverter.ReadUInt64(bytes, offset, out readCount);
+                if (readCount == 0)
+                {
+                    throw CreateParsingException("Number Token");
+                }
+                offset += readCount;
+                return v;
+            }
         }
 
         public Single ReadSingle()
